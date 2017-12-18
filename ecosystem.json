@@ -1,0 +1,51 @@
+{
+  /**
+   * Application configuration section
+   * http://pm2.keymetrics.io/docs/usage/application-declaration/
+   */
+  apps : [
+
+    // First application
+    {
+      name      : "QQAutoAPI",
+      script    : "app.js",
+      env: {
+        COMMON_VARIABLE: "true"
+      },
+      env_production : {
+        NODE_ENV: "production"
+      },
+       env_dev : {
+        NODE_ENV: "development"
+      }
+    },
+
+   
+  ],
+
+  /**
+   * Deployment section
+   * http://pm2.keymetrics.io/docs/usage/deployment/
+   */
+  deploy : {
+    production : {
+      user : "wanli",
+      host : "192.168.0.72",
+      ref  : "origin/master",
+      repo : "git@192.168.0.219:root/quanqiuAutoDZFront.git",
+      path : "~/www/QQDZbak/production",
+      "post-deploy" : "npm install --registry http://192.168.0.219:4877 && pm2 startOrRestart ecosystem.json --env production"
+    },
+    dev : {
+      user : "wanli",
+      host : "192.168.0.72",
+      ref  : "origin/master",
+      repo : "git@192.168.0.219:root/quanqiuAutoDZFront.git",
+      path : "~/www/QQDZbak/development",
+      "post-deploy" : "npm install  --registry http://192.168.0.219:4877 && pm2 startOrRestart ecosystem.json --env dev",
+      env  : {
+        NODE_ENV: "development"
+      }
+    }
+  }
+}
